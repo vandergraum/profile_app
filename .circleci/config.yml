@@ -52,17 +52,17 @@ jobs:
           name: run rubocop via bundle
           command: bundle exec rubocop --auto-correct
   deploy:
-    working_directory: ~/zadeploy/profile_app
-    docker:
-      - image: circleci/ruby:2.6.3-stretch-node
-    steps: 
+    executor: heroku/default
+    steps:
       - checkout
-      - run:
-          name: deploy to heroku
-          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master 
-
-          #    executor: heroku/default
-          #    steps:
-          #      - checkout
-          #      - heroku/install
-          #      - heroku/deploy-via-git
+      - heroku/install
+      - heroku/deploy-via-git
+# or we can use config below
+#    working_directory: ~/zadeploy/profile_app
+#    docker:
+#      - image: circleci/ruby:2.6.3-stretch-node
+#    steps: 
+#      - checkout
+#      - run:
+#          name: deploy to heroku with git
+#          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master 
