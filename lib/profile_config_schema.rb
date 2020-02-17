@@ -17,7 +17,7 @@ module ProfileConfigSchema
       object(
         email: { type: 'string', pattern: URI::MailTo::EMAIL_REGEXP },
         goal: { type: 'string', minLength: 20 },
-        programming_languages: { type: 'string', minLength: 5 },
+        programming_languages: { type: 'string', minLength: 4 },
         current_job: { type: 'string' },
         age: { type: 'integer', minimum: 18 },
         english: { enum: %i[a1 a2 b1 b2 c1 c2] },
