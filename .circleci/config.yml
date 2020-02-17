@@ -54,7 +54,5 @@ jobs:
       - checkout
       - heroku/install
       - run:
-          command: >
-            echo "The command above installs Heroku, the command below deploys.
-            What you do inbetween is up to you!"
+          command: heroku login
       - heroku/deploy-via-git
