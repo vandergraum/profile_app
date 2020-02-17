@@ -6,8 +6,8 @@ version: 2.1
 
 
 orbs:
-  ruby: circleci/ruby@0.1.2 # Ruby orb registry: https://circleci.com/orbs/registry/orb/circleci/ruby
-  #  heroku: circleci/heroku@1.0.1
+        #  ruby: circleci/ruby@0.1.2 # Ruby orb registry: https://circleci.com/orbs/registry/orb/circleci/ruby
+  heroku: circleci/heroku@1.0.1
 
 workflows:
   version: 2
@@ -52,13 +52,8 @@ jobs:
           name: run rubocop via bundle
           command: bundle exec rubocop --auto-correct
   deploy:
-    working_directory: ~/zadeploy/profile_app
-    docker: 
-          - image: circleci/ruby:2.6.3-stretch-node
+    executor: heroku/default
     steps:
       - checkout
-      - run:
-          name: Deploy Master to Heroku
-          command: |
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-
+      - heroku/install
+      - heroku/deploy-via-git
