@@ -50,6 +50,8 @@ jobs:
           command: bundle exec rubocop --auto-correct
   deploy:
     working_directory: ~/zadeploy/profile_app
+    docker: 
+      - image: circleci/ruby:2.6.3-stretch-node
     steps:
       - checkout
       - run: git push heroku master
