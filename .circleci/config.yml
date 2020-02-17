@@ -22,7 +22,7 @@ workflows:
            - rubocop
          filters:
            branches:
-             only: vandergraum
+             only: master
 
 jobs: 
   rspec:
@@ -57,6 +57,8 @@ jobs:
           - image: circleci/ruby:2.6.3-stretch-node
     steps:
       - checkout
-      - type: shell
+      - run:
+          name: Deploy Master to Heroku
           command: |
             git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
