@@ -20,6 +20,9 @@ workflows:
      - deploy:
          requires:
            - rubocop
+         filters:
+           branches:
+             only: vandergraum
 
 jobs: 
   rspec:
@@ -49,14 +52,11 @@ jobs:
           name: run rubocop via bundle
           command: bundle exec rubocop --auto-correct
   deploy:
-    machine:
-      enabled: true
     working_directory: ~/zadeploy/profile_app
-    environment:
-      HEROKU_APP: "vandergraum"
+    docker: 
+          - image: circleci/ruby:2.6.3-stretch-node
     steps:
       - checkout
-      - run:
-          name: Setup Heroku
-          command: bash .circleci/setup-heroku.sh
-      - run: git push heroku vandergraum:master
+      - type: shell
+          command: |
+                  git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
