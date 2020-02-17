@@ -49,10 +49,7 @@ jobs:
           name: run rubocop via bundle
           command: bundle exec rubocop --auto-correct
   deploy:
-    executor: heroku/default
+    working_directory: ~/zadeploy/profile_app
     steps:
       - checkout
-      - heroku/install
-      - run:
-          command: heroku login
-      - heroku/deploy-via-git
+      - run: git push heroku master
